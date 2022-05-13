@@ -2,10 +2,10 @@
 
 const tape = require('tape')
 const dgram = require('dgram')
-const dns = require('.')
+const DNS = require('.')
 
 tape('query + response', function (t) {
-  const socket = dns()
+  const socket = new DNS()
 
   socket.on('query', function (query, port, host) {
     socket.response(query, {
@@ -41,7 +41,7 @@ tape('pass socket + query + response', function (t) {
   const udp = dgram.createSocket('udp4')
 
   udp.bind(0, function () {
-    const socket = dns({ socket: udp })
+    const socket = new DNS({ socket: udp })
 
     socket.on('query', function (query, port, host) {
       socket.response(query, {
@@ -75,7 +75,7 @@ tape('timeout', function (t) {
 
   dummy.bind(0, function () {
     let done = false
-    const socket = dns()
+    const socket = new DNS()
 
     const timeout = setTimeout(function () {
       done = true
@@ -107,7 +107,7 @@ tape('pass socket + timeout', function (t) {
   dummy.bind(0, function () {
     udp.bind(0, function () {
       let done = false
-      const socket = dns({ socket: udp })
+      const socket = new DNS({ socket: udp })
 
       const timeout = setTimeout(function () {
         done = true
@@ -134,7 +134,7 @@ tape('pass socket + timeout', function (t) {
 })
 
 tape('two queries + response', function (t) {
-  const socket = dns()
+  const socket = new DNS()
   let missing = 2
 
   socket.on('query', function (query, port, host) {

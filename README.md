@@ -10,8 +10,8 @@ npm install dns-socket
 ## Usage
 
 ``` js
-const dnsSocket = require('dns-socket')
-const socket = dnsSocket()
+const DNSSocket = require('dns-socket')
+const socket = new DNSSocket()
 
 socket.query({
   questions: [{
@@ -25,7 +25,7 @@ socket.query({
 
 ## API
 
-#### `var socket = dns([options])`
+#### `var socket = new DNSSocket([options])`
 
 Create a new DNS socket instance. The `options` object includes:
 

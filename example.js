@@ -1,7 +1,7 @@
 'use strict'
 
-const dnsSocket = require('.')
-const socket = dnsSocket()
+const DNSSocket = require('.')
+const socket = new DNSSocket()
 
 socket.query({
   flags: dnsSocket.RECURSION_DESIRED,

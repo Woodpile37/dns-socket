@@ -4,7 +4,7 @@ const DNSSocket = require('.')
 const socket = new DNSSocket()
 
 socket.query({
-  flags: dnsSocket.RECURSION_DESIRED,
+  flags: DNSSocket.RECURSION_DESIRED,
   questions: [{
     type: 'ANY',
     name: 'www.dr.dk'

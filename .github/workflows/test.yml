@@ -1,0 +1,50 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    needs: strict
+    strategy:
+      matrix:
+        include:
+          - id: ubuntu:6
+            os: ubuntu-latest
+            node: 6
+          - id: ubuntu:8
+            os: ubuntu-latest
+            node: 8
+          - id: ubuntu:10
+            os: ubuntu-latest
+            node: 10
+          - id: ubuntu:12
+            os: ubuntu-latest
+            node: 12
+          - id: macos:14
+            os: macos-latest
+            node: 14
+          - id: windows:16
+            os: windows-latest
+            node: 16
+          - id: ubuntu:18
+            os: ubuntu-latest
+            node: 18
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node }}
+    - run: npm i
+    - run: npm run unit
+
+  strict:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: lts/*
+    - run: npm i
+    - run: npm run lint
+    - run: npm run coverage

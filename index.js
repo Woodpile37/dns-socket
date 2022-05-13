@@ -265,11 +265,11 @@ DNS.prototype.query = function (query, port, host, cb) {
     callback: cb || noop,
     redirects: 0,
     firstTry: Date.now(),
-    query: query,
+    query,
     tries: 0,
-    buffer: buffer,
-    port: port,
-    host: host
+    buffer,
+    port,
+    host
   }
   this.socket.send(buffer, 0, buffer.length, port, Array.isArray(host) ? host[Math.floor(host.length * Math.random())] : host || '127.0.0.1')
   return id

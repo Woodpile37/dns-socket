@@ -1,8 +1,16 @@
 {
-  "name": "dns-socket",
+  "name": "@leichtgewicht/dns-socket",
   "version": "4.2.2",
   "description": "Make low-level DNS requests with retry and timeout support.",
   "author": "Mathias Buus (@mafintosh)",
+  "main": "index.cjs",
+  "module": "index.mjs",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require":  "./index.cjs"
+    }
+  },
   "license": "MIT",
   "repository": "mafintosh/dns-socket",
   "homepage": "https://github.com/mafintosh/dns-socket",
@@ -12,13 +20,15 @@
   "scripts": {
     "test": "npm run lint && npm run unit",
     "lint": "standard",
-    "unit": "tape test.js",
-    "coverage": "c8 -r html npm run unit"
+    "unit": "tape test.mjs",
+    "coverage": "c8 -r html npm run unit",
+    "prepare": "npx @leichtgewicht/esm2umd"
   },
   "dependencies": {
-    "dns-packet": "^5.3.1"
+    "@leichtgewicht/dns-packet": "^5.3.1"
   },
   "devDependencies": {
+    "@leichtgewicht/esm2umd": "^0.1.1",
     "c8": "^7.11.2",
     "standard": "^17.0.0",
     "tape": "^5.5.3"
@@ -28,8 +38,5 @@
     "domain",
     "socket",
     "low-level"
-  ],
-  "files": [
-    "index.js"
   ]
 }

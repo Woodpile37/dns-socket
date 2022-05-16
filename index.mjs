@@ -1,10 +1,8 @@
-'use strict'
+import dgram from 'dgram'
+import * as packet from '@leichtgewicht/dns-packet'
+import { EventEmitter } from 'events'
 
-const dgram = require('dgram')
-const packet = require('dns-packet')
-const events = require('events')
-
-class DNS extends events.EventEmitter {
+export class DNSSocket extends EventEmitter {
   constructor (opts = {}) {
     super()
 
@@ -222,7 +220,7 @@ class DNS extends events.EventEmitter {
 
     this.inflight++
     query.type = 'query'
-    query.flags = typeof query.flags === 'number' ? query.flags : DNS.RECURSION_DESIRED
+    query.flags = typeof query.flags === 'number' ? query.flags : DNSSocket.RECURSION_DESIRED
 
     const id = this._getNextEmptyId()
     if (id === -1) {
@@ -248,12 +246,12 @@ class DNS extends events.EventEmitter {
   }
 }
 
-DNS.RECURSION_DESIRED = DNS.prototype.RECURSION_DESIRED = packet.RECURSION_DESIRED
-DNS.RECURSION_AVAILABLE = DNS.prototype.RECURSION_AVAILABLE = packet.RECURSION_AVAILABLE
-DNS.TRUNCATED_RESPONSE = DNS.prototype.TRUNCATED_RESPONSE = packet.TRUNCATED_RESPONSE
-DNS.AUTHORITATIVE_ANSWER = DNS.prototype.AUTHORITATIVE_ANSWER = packet.AUTHORITATIVE_ANSWER
-DNS.AUTHENTIC_DATA = DNS.prototype.AUTHENTIC_DATA = packet.AUTHENTIC_DATA
-DNS.CHECKING_DISABLED = DNS.prototype.CHECKING_DISABLED = packet.CHECKING_DISABLED
+DNSSocket.RECURSION_DESIRED = DNSSocket.prototype.RECURSION_DESIRED = packet.RECURSION_DESIRED
+DNSSocket.RECURSION_AVAILABLE = DNSSocket.prototype.RECURSION_AVAILABLE = packet.RECURSION_AVAILABLE
+DNSSocket.TRUNCATED_RESPONSE = DNSSocket.prototype.TRUNCATED_RESPONSE = packet.TRUNCATED_RESPONSE
+DNSSocket.AUTHORITATIVE_ANSWER = DNSSocket.prototype.AUTHORITATIVE_ANSWER = packet.AUTHORITATIVE_ANSWER
+DNSSocket.AUTHENTIC_DATA = DNSSocket.prototype.AUTHENTIC_DATA = packet.AUTHENTIC_DATA
+DNSSocket.CHECKING_DISABLED = DNSSocket.prototype.CHECKING_DISABLED = packet.CHECKING_DISABLED
 
 function noop () {
 }
@@ -265,5 +263,3 @@ function isListening (socket) {
     return false
   }
 }
-
-module.exports = DNS

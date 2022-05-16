@@ -1,11 +1,9 @@
-'use strict'
-
-const tape = require('tape')
-const dgram = require('dgram')
-const DNS = require('.')
+import tape from 'tape'
+import dgram from 'dgram'
+import { DNSSocket } from '@leichtgewicht/dns-socket'
 
 tape('query + response', function (t) {
-  const socket = new DNS()
+  const socket = new DNSSocket()
 
   socket.on('query', function (query, port, host) {
     socket.response(query, {
@@ -41,7 +39,7 @@ tape('pass socket + query + response', function (t) {
   const udp = dgram.createSocket('udp4')
 
   udp.bind(0, function () {
-    const socket = new DNS({ socket: udp })
+    const socket = new DNSSocket({ socket: udp })
 
     socket.on('query', function (query, port, host) {
       socket.response(query, {
@@ -75,7 +73,7 @@ tape('timeout', function (t) {
 
   dummy.bind(0, function () {
     let done = false
-    const socket = new DNS()
+    const socket = new DNSSocket()
 
     const timeout = setTimeout(function () {
       done = true
@@ -107,7 +105,7 @@ tape('pass socket + timeout', function (t) {
   dummy.bind(0, function () {
     udp.bind(0, function () {
       let done = false
-      const socket = new DNS({ socket: udp })
+      const socket = new DNSSocket({ socket: udp })
 
       const timeout = setTimeout(function () {
         done = true
@@ -134,7 +132,7 @@ tape('pass socket + timeout', function (t) {
 })
 
 tape('two queries + response', function (t) {
-  const socket = new DNS()
+  const socket = new DNSSocket()
   let missing = 2
 
   socket.on('query', function (query, port, host) {

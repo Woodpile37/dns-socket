@@ -1,16 +1,16 @@
 # dns-socket
-[![](https://img.shields.io/npm/v/dns-socket.svg?style=flat)](https://www.npmjs.org/package/dns-socket) [![](https://img.shields.io/npm/dm/dns-socket.svg)](https://www.npmjs.org/package/dns-socket) [![](https://api.travis-ci.org/mafintosh/dns-socket.svg?style=flat)](https://travis-ci.org/mafintosh/dns-socket)
 
+[![](https://img.shields.io/npm/v/@leichtgewicht/dns-socket.svg?style=flat)](https://www.npmjs.org/package/@leichtgewicht/dns-socket) [![](https://img.shields.io/npm/dm/@leichtgewicht/dns-socket.svg)](https://www.npmjs.org/package/@leichtgewicht/dns-socket) [![Tests](https://github.com/martinheidegger/dns-socket/actions/workflows/test.yml/badge.svg)](https://github.com/martinheidegger/dns-socket/actions/workflows/test.yml)
 Make low-level DNS requests with retry and timeout support.
 
 ```
-npm install dns-socket
+npm install @leichtgewicht/dns-socket
 ```
 
 ## Usage
 
 ``` js
-const DNSSocket = require('dns-socket')
+import { DNSSocket } from '@leichtgewicht/dns-socket'
 const socket = new DNSSocket()
 
 socket.query({
@@ -38,11 +38,11 @@ Create a new DNS socket instance. The `options` object includes:
 
 #### `socket.on('query', query, port, host)`
 
-Emitted when a dns query is received. The query is a [dns-packet](https://github.com/mafintosh/dns-packet)
+Emitted when a dns query is received. The query is a [dns-packet](https://github.com/martinheidegger/dns-packet)
 
 #### `socket.on('response', response, port, host)`
 
-Emitted when a dns response is received. The response is a [dns-packet](https://github.com/mafintosh/dns-packet)
+Emitted when a dns response is received. The response is a [dns-packet](https://github.com/martinheidegger/dns-packet)
 
 #### `var id = socket.query(query, port, [host], [callback])`
 

@@ -1,6 +1,5 @@
-'use strict'
+import { DNSSocket } from '@leichtgewicht/dns-socket'
 
-const DNSSocket = require('.')
 const socket = new DNSSocket()
 
 socket.query({

@@ -2,5 +2,5 @@ node_modules
 .idea
 package-lock.json
 coverage
-*.cjs
+*.js
 *.tgz

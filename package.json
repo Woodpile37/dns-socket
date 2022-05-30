@@ -1,6 +1,6 @@
 {
   "name": "@leichtgewicht/dns-socket",
-  "version": "4.2.3",
+  "version": "5.0.0",
   "description": "Make low-level DNS requests with retry and timeout support.",
   "author": "Mathias Buus (@mafintosh)",
   "main": "index.js",

@@ -1,6 +1,6 @@
 import tape from 'tape'
 import dgram from 'dgram'
-import { DNSSocket } from '@leichtgewicht/dns-socket'
+import { DNSSocket } from './index.mjs'
 
 tape('query + response', function (t) {
   const socket = new DNSSocket()

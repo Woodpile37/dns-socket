@@ -1,6 +1,7 @@
 import dgram from 'dgram'
 import * as packet from '@leichtgewicht/dns-packet'
 import { EventEmitter } from 'events'
+import { Buffer } from 'buffer'
 
 export class DNSSocket extends EventEmitter {
   constructor (opts = {}) {
@@ -11,6 +12,7 @@ export class DNSSocket extends EventEmitter {
     this.timeoutChecks = opts.timeoutChecks || (this.timeout / 10)
     this.destroyed = false
     this.inflight = 0
+    this.raw = opts.raw === true
     this.maxQueries = opts.maxQueries || 10000
     this.maxRedirects = opts.maxRedirects || 0
     this.socket = opts.socket || dgram.createSocket('udp4')
@@ -132,7 +134,8 @@ export class DNSSocket extends EventEmitter {
     q.redirects++
     q.firstTry = Date.now()
     q.tries = 0
-    q.buffer = packet.encode(q.query)
+    q.buffer = Buffer.alloc(packet.encodingLength(q.query))
+    packet.encode(q.query, q.buffer)
     this._queries[id] = q
     this.socket.send(q.buffer, 0, q.buffer.length, q.port, Array.isArray(q.host) ? q.host[Math.floor(q.host.length * Math.random())] : q.host || '127.0.0.1')
     return true
@@ -178,7 +181,8 @@ export class DNSSocket extends EventEmitter {
 
     response.type = 'response'
     response.id = query.id
-    const buffer = packet.encode(response)
+    const buffer = Buffer.alloc(packet.encodingLength(response))
+    packet.encode(response, buffer)
     this.socket.send(buffer, 0, buffer.length, port, host)
   }
 
@@ -229,7 +233,8 @@ export class DNSSocket extends EventEmitter {
     }
 
     query.id = id + 1
-    const buffer = packet.encode(query)
+    const buffer = Buffer.alloc(packet.encodingLength(query))
+    packet.encode(query, buffer)
 
     this._queries[id] = {
       callback: cb || noop,
